@@ -1,0 +1,104 @@
+﻿@using Microsoft.EntityFrameworkCore;
+@using SmartShop.Models;
+@using SmartShop.Models.Data;
+@inject DataContext _context
+@using System.Security.Claims
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SmartShop</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+
+    @RenderSection("Styles", required: false)
+</head>
+
+<body>
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+        <div class="container px-4 px-lg-5">
+            <a class="navbar-brand fw-bold text-dark" asp-controller="Home" asp-action="Index">SmartShop</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                    <li class="nav-item"><a class="nav-link active" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" asp-controller="Products" asp-action="Create">Add Products</a></li>
+                </ul>
+
+                @* حساب عدد المنتجات في السلة *@
+                @{
+                    int cartCount = 0;
+                    var userEmail = User.FindFirstValue(ClaimTypes.Email) ?? "demo@test.com";
+                    
+                    var user = _context.Users
+                        .Include(u => u.Carts)
+                        .ThenInclude(c => c.CartItems)
+                        .FirstOrDefault(u => u.Email == userEmail);
+
+                    if (user != null && user.Carts.Any())
+                    {
+                        cartCount = user.Carts
+                            .SelectMany(c => c.CartItems)
+                            .Sum(ci => ci.Quantity);
+                    }
+                }
+
+                @* زر السلة *@
+                <a class="btn btn-outline-dark me-3" asp-controller="Products" asp-action="ViewCart">
+                    <i class="bi-cart-fill me-1"></i>
+                    Cart
+                    <span class="badge bg-dark text-white ms-1 rounded-pill">@cartCount</span>
+                </a>
+
+                <!-- User Info -->
+                <div class="d-flex align-items-center">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <span class="me-3 text-dark fw-bold">👋 @User.Identity.Name</span>
+                        <form action="/Identity/Account/Logout" method="post">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-outline-dark btn-sm">Logout</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <a href="/Identity/Account/Login" class="btn btn-outline-dark btn-sm me-2">Login</a>
+                        <a href="/Identity/Account/Register" class="btn btn-outline-dark btn-sm">Register</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="bg-dark py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">Laptops</h1>
+                <p class="lead fw-normal text-white-90 mb-0">Dell & Hp & Lenovo & MacBook</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="container py-4">
+        @RenderBody()
+    </main>
+
+    <footer class="bg-dark text-white text-center py-3">
+        &copy; 2025 - SmartShop
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/scripts.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

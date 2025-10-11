@@ -1,0 +1,140 @@
+﻿@page
+@model RegisterModel
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SmartShop</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        
+        .login-card {
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border: 1px solid #dee2e6;
+        }
+        
+        .brand-side {
+            background: #000;
+            color: white;
+            padding: 3rem;
+        }
+        
+        .form-side {
+            background: white;
+            padding: 3rem;
+        }
+        
+        .laptop-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+        
+        .btn-primary {
+            background: #000;
+            border: 1px solid #000;
+        }
+        
+        .btn-primary:hover {
+            background: #333;
+            border-color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="card login-card">
+                    <div class="row g-0">
+                        <!-- Left Side - Brand Info -->
+                        <div class="col-md-6 brand-side">
+                            <div class="text-center">
+                                <i class="fas fa-laptop laptop-icon"></i>
+                                <h2 class="fw-bold mb-4">SmartShop</h2>
+                                <p class="mb-4">Premium Laptop Store</p>
+                            </div>
+                            
+                            <div class="features-list">
+                                <h5 class="mb-3">Benefits of Joining Us</h5>
+                                <ul class="list-unstyled">
+                                    <li class="mb-2"><i class="fas fa-check-circle me-2"></i>Easy Order Tracking</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle me-2"></i>Exclusive Member Offers</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle me-2"></i>Order History Saved</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle me-2"></i>Faster & Easier Payments</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Right Side - Form -->
+                        <div class="col-md-6 form-side">
+                            <div class="text-center mb-4">
+                                <h3 class="fw-bold">Create Account</h3>
+                                <p class="text-muted">Join the SmartShop family</p>
+                            </div>
+
+                            <form id="registerForm" asp-route-returnUrl="/Home/Index" method="post">
+                                <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                                <!-- Email -->
+                                <div class="form-floating mb-3">
+                                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                                    <label asp-for="Input.Email" class="form-label">Email</label>
+                                    <span asp-validation-for="Input.Email" class="text-danger small"></span>
+                                </div>
+
+                                <!-- Password -->
+                                <div class="form-floating mb-3">
+                                    <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Password" />
+                                    <label asp-for="Input.Password" class="form-label">Password</label>
+                                    <span asp-validation-for="Input.Password" class="text-danger small"></span>
+                                </div>
+
+                                <!-- Confirm Password -->
+                                <div class="form-floating mb-3">
+                                    <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Confirm Password" />
+                                    <label asp-for="Input.ConfirmPassword" class="form-label">Confirm Password</label>
+                                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger small"></span>
+                                </div>
+
+                                <!-- Register button -->
+                                <button id="registerSubmit" type="submit" class="btn btn-primary w-100 py-2 mb-3">
+                                    <i class="fas fa-user-plus me-2"></i>Create Account
+                                </button>
+
+                                <!-- Links -->
+                                <div class="text-center">
+                                    <p class="mb-0">
+                                        Already have an account? 
+                                        <a asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="/Home/Index" class="text-decoration-none">
+                                            Log in
+                                        </a>
+                                    </p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

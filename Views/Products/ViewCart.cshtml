@@ -1,0 +1,151 @@
+﻿@model SmartShop.Models.Cart
+
+@{
+    ViewData["Title"] = "Shopping Cart";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>🛒 Shopping Cart</h1>
+        <a href="@Url.Action("Index", "Home")" class="btn btn-outline-primary">
+            ← Continue Shopping
+        </a>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (!Model.CartItems.Any())
+    {
+        <div class="text-center py-5">
+            <div class="empty-cart-icon mb-4" style="font-size: 4rem;">🛒</div>
+            <h3 class="text-muted">@(ViewBag.EmptyMessage ?? "Your cart is empty")</h3>
+            <p class="text-muted">There are no products in your shopping cart</p>
+            <a href="@Url.Action("Index", "Home")" class="btn btn-primary mt-3">
+                Start Shopping Now
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-lg-8">
+                @foreach (var item in Model.CartItems)
+                {
+                    <div class="card mb-3 shadow-sm">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-2">
+                                    @if (!string.IsNullOrEmpty(item.Product.ImageUrl))
+                                    {
+                                        <img src="@item.Product.ImageUrl" class="img-fluid rounded" alt="@item.Product.Title" 
+                                             style="height: 80px; width: 80px; object-fit: cover;">
+                                    }
+                                    else
+                                    {
+                                        <img src="https://images.unsplash.com/photo-1556656793-08538906a9f8?w=200" 
+                                             class="img-fluid rounded" alt="No Image"
+                                             style="height: 80px; width: 80px; object-fit: cover;">
+                                    }
+                                </div>
+                                
+                                <div class="col-md-4">
+                                    <h5 class="card-title mb-1">@item.Product.Title</h5>
+                                    <p class="card-text text-muted small mb-1">@item.Product.Description</p>
+                                    <p class="card-text text-success fw-bold mb-0">$@item.Product.Price</p>
+                                </div>
+                                
+                                <div class="col-md-3">
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <form asp-action="DecreaseQuantity" asp-controller="Products" method="post" class="d-inline">
+                                            <input type="hidden" name="cartItemId" value="@item.Id" />
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-outline-secondary btn-sm">-</button>
+                                        </form>
+                                        
+                                        <span class="mx-3 fs-5 fw-bold">@item.Quantity</span>
+                                        
+                                        <form asp-action="IncreaseQuantity" asp-controller="Products" method="post" class="d-inline">
+                                            <input type="hidden" name="cartItemId" value="@item.Id" />
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-outline-secondary btn-sm">+</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-2 text-center">
+                                    <p class="fw-bold text-primary fs-5">$@(item.Quantity * item.Product.Price)</p>
+                                </div>
+                                
+                                <div class="col-md-1 text-center">
+                                    <form asp-action="RemoveItem" asp-controller="Products" method="post" class="d-inline">
+                                        <input type="hidden" name="cartItemId" value="@item.Id" />
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-outline-danger btn-sm" title="Delete">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Order Summary</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Total Items:</span>
+                            <span class="fw-bold">@Model.CartItems.Sum(ci => ci.Quantity)</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Total Price:</span>
+                            <span class="fw-bold text-success fs-5">$@Model.TotalPrice</span>
+                        </div>
+                        
+                        <form asp-action="ClearCart" asp-controller="Products" method="post" class="mb-3">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-outline-danger w-100" 
+                                    onclick="return confirm('Are you sure you want to clear your cart?')">
+                                Clear Cart
+                            </button>
+                        </form>
+                        
+                        <button class="btn btn-success w-100 btn-lg" disabled title="This feature is under development">
+                            Checkout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+<style>
+    .empty-cart-icon {
+        opacity: 0.5;
+    }
+    .card {
+        border: none;
+    }
+</style>

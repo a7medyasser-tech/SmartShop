@@ -1,0 +1,155 @@
+﻿@page
+@model SmartShop.Areas.Identity.Pages.Account.LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SmartShop</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        
+        .login-card {
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border: 1px solid #dee2e6;
+        }
+        
+        .brand-side {
+            background: #000;
+            color: white;
+            padding: 3rem;
+        }
+        
+        .form-side {
+            background: white;
+            padding: 3rem;
+        }
+        
+        .laptop-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+        
+        .btn-primary {
+            background: #000;
+            border: 1px solid #000;
+        }
+        
+        .btn-primary:hover {
+            background: #333;
+            border-color: #333;
+        }
+        
+        .btn-outline-dark {
+            border: 1px solid #000;
+            color: #000;
+        }
+        
+        .btn-outline-dark:hover {
+            background: #000;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="card login-card">
+                    <div class="row g-0">
+                        <!-- Left Side - Brand Info -->
+                        <div class="col-md-6 brand-side">
+                            <div class="text-center">
+                                <i class="fas fa-laptop laptop-icon"></i>
+                                <h2 class="fw-bold mb-4">SmartShop</h2>
+                                <p class="mb-4">Premium Laptop Store</p>
+                            </div>
+                            
+                            <div class="features-list">
+                                <h5 class="mb-3">Why Choose SmartShop?</h5>
+                                <ul class="list-unstyled">
+                                    <li class="mb-2"><i class="fas fa-check-circle me-2"></i>Latest Laptop Models</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle me-2"></i>Competitive Prices</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle me-2"></i>Fast & Free Shipping</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle me-2"></i>Expert Technical Support</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Right Side - Form -->
+                        <div class="col-md-6 form-side">
+                            <div class="text-center mb-4">
+                                <h3 class="fw-bold">Log In</h3>
+                                <p class="text-muted">Enter your credentials to access your account</p>
+                            </div>
+
+                            <form id="account" method="post">
+                                <!-- 🔴 أضفت هذا السطر - علشان يروح على Home بعد Login -->
+                                <input type="hidden" name="ReturnUrl" value="/Home/Index" />
+                                
+                                <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                                <!-- Email -->
+                                <div class="form-floating mb-3">
+                                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                                    <label asp-for="Input.Email" class="form-label">Email</label>
+                                    <span asp-validation-for="Input.Email" class="text-danger small"></span>
+                                </div>
+
+                                <!-- Password -->
+                                <div class="form-floating mb-3">
+                                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="Password" />
+                                    <label asp-for="Input.Password" class="form-label">Password</label>
+                                    <span asp-validation-for="Input.Password" class="text-danger small"></span>
+                                </div>
+
+                                <!-- Remember me -->
+                                <div class="form-check mb-4">
+                                    <input class="form-check-input" asp-for="Input.RememberMe" />
+                                    <label class="form-check-label" asp-for="Input.RememberMe">
+                                        Remember me
+                                    </label>
+                                </div>
+
+                                <!-- Login button -->
+                                <button id="login-submit" type="submit" class="btn btn-primary w-100 py-2 mb-3">
+                                    <i class="fas fa-sign-in-alt me-2"></i>Log In
+                                </button>
+
+                                <!-- Links -->
+                                <div class="text-center">
+                                    <a id="forgot-password" asp-area="Identity" asp-page="/Account/ForgotPassword" class="text-decoration-none me-3">
+                                        Forgot your password?
+                                    </a>
+                                    <!-- 🔴 غيرت الـ returnUrl هنا كمان -->
+                                    <a asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="/Home/Index" class="text-decoration-none">
+                                        Create new account
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
