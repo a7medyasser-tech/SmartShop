@@ -1,8 +1,102 @@
-I developed a complete platform from scratch to a professional level, including a secure user system with advanced permissions, comprehensive product management (add, edit, delete, categorize), a smart shopping cart that saves your purchases, a professional black and white user interface, and a responsive design that works seamlessly across all devices.
+# SmartShop
 
-On the back-end, I used the latest technologies such as ASP.NET Core 8.0, Entity Framework, and SQL Server,
-while on the front-end I implemented Bootstrap 5.3, JavaScript, and jQuery, ensuring the highest security standards using ASP.NET Identity and protection against cyberattacks.
+SmartShop is a complete E-Commerce web application developed using ASP.NET Core MVC. The project provides a modern online shopping experience with a clean architecture, secure authentication, and a responsive user interface.
 
-I overcame many challenges, including building a secure authentication system from scratch, designing complex database relationships, developing a user-friendly interface, and ensuring platform security against common vulnerabilities.
+## Overview
 
-From user registration to product management and order tracking – every part was built with precision and professionalism.
+The application allows customers to browse products, view product details, and manage their shopping cart, while administrators can manage products and categories through a dedicated dashboard.
+
+## Features
+
+### Customer Features
+
+* User registration and login
+* Browse products
+* View product details
+* Add products to the shopping cart
+* Remove products from the shopping cart
+* Responsive user interface
+
+### Admin Features
+
+* Add new products
+* Edit existing products
+* Delete products
+* Manage product categories
+* Full CRUD operations
+* Admin dashboard
+
+## Technologies Used
+
+### Backend
+
+* ASP.NET Core MVC
+* C#
+* Entity Framework Core
+* SQL Server
+* ASP.NET Identity
+* LINQ
+
+### Frontend
+
+* HTML5
+* CSS3
+* Bootstrap 5
+* JavaScript
+* jQuery
+* Razor Views
+
+### Development Tools
+
+* Visual Studio 2022
+* Git
+* GitHub
+
+## Security
+
+* ASP.NET Identity Authentication
+* Role-Based Authorization
+* Password Hashing
+* Model Validation
+* Secure database access using Entity Framework Core
+
+## Project Structure
+
+```text
+SmartShop
+│
+├── Controllers
+├── Models
+├── Views
+├── Data
+├── Migrations
+├── wwwroot
+├── ViewModels
+└── Program.cs
+```
+
+## Installation
+
+1. Clone the repository.
+
+```bash
+git clone https://github.com/a7medyasser-tech/SmartShop.git
+```
+
+2. Open the solution in Visual Studio 2022.
+
+3. Configure the SQL Server connection string in `appsettings.json`.
+
+4. Run the following command to apply the database migrations:
+
+```powershell
+Update-Database
+```
+
+5. Run the project.
+
+## Author
+
+Ahmed Yasser
+
+Backend Developer specializing in ASP.NET Core MVC, C#, Entity Framework Core, and SQL Server.
