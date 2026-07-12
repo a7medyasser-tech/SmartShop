@@ -6,6 +6,15 @@ SmartShop is a complete E-Commerce web application developed using ASP.NET Core 
 
 The application allows customers to browse products, view product details, and manage their shopping cart, while administrators can manage products and categories through a dedicated dashboard.
 
+## Architecture
+
+The project follows MVC architecture:
+
+- Models: Database entities and business data
+- Views: Razor Views for UI
+- Controllers: Handle requests and application flow
+- Entity Framework Core: Database communication
+- Identity: Authentication and Authorization
 ## Features
 
 ### Customer Features
