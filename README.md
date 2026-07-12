@@ -106,6 +106,11 @@ Update-Database
 
 ## Author
 
-Ahmed Yasser
+Ahmed Yasser Mohamed
 
-Backend Developer specializing in ASP.NET Core MVC, C#, Entity Framework Core, and SQL Server.
+Junior Back-End Developer specialized in:
+- ASP.NET Core
+- C#
+- Entity Framework Core
+- SQL Server
+- Web API Development
