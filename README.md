@@ -1,4 +1,4 @@
-# SmartShop
+# # SmartShop - ASP.NET Core MVC E-Commerce Platform
 
 SmartShop is a complete E-Commerce web application developed using ASP.NET Core MVC. The project provides a modern online shopping experience with a clean architecture, secure authentication, and a responsive user interface.
 
